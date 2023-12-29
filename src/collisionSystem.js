@@ -54,8 +54,8 @@ const collisionSystem = (entities, components, ecs) => {
 
           if (ball != obj) {
             if (collision(components, ball, obj)) {
-              const breakSong = new Audio("./utils/break.wav");
-              breakSong.volume = 0.3;
+              const breakSong = new Audio("./utils/break.mp3");
+              breakSong.volume = 0.1;
               breakSong.play();
 
               components.CollisionBoxComponent[obj].hit = true;
