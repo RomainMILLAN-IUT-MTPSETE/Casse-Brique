@@ -3,6 +3,16 @@ import * as entitites from "./entities.js";
 import * as cpn from "./components.js";
 import * as gameOver from "./gameoverSystem.js";
 
+let nbBall = -1;
+
+function getNbBall() {
+  return nbBall;
+}
+
+function removeOneBall() {
+  nbBall--;
+}
+
 //hard coded scene...
 function sceneSetup() {
   const mure01 = entitites.Mur(0, 0, 5, 350);
@@ -12,6 +22,7 @@ function sceneSetup() {
 
   const ball = entitites.Ball(150, 150, 10, 10, 0.1, 0.05);
   const ball2 = entitites.Ball(150, 150, 10, 10, 0.15, 0.075);
+  nbBall = 2;
   const raquette = entitites.Raquette(0, 300, 50, 10);
   let offsetx = 25;
   let offsety = 10;
@@ -63,12 +74,9 @@ function handleLife(event) {
     } else {
       engine.ecs.components.GameStateComponent[state].life -= 1;
 
-      for (const ball of Object.getOwnPropertySymbols(
-        engine.ecs.components[cpn.BallTag.name]
-      )) {
-        engine.ecs.components.PositionComponent[ball].y = 150;
-        engine.ecs.components.PositionComponent[ball].x = 150;
-      }
+      const ball = entitites.Ball(150, 150, 10, 10, 0.1, 0.05);
+      const ball2 = entitites.Ball(150, 150, 10, 10, 0.15, 0.075);
+      nbBall = 2;
     }
   }
 }
@@ -154,3 +162,5 @@ function handleDownDown(event) {
     engine.ecs.components.GameStateComponent[state].downControl = true;
   }
 }
+
+export { getNbBall, removeOneBall };
