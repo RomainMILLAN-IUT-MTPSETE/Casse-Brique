@@ -13,4 +13,4 @@ Projet étudiant lors du cour de sensibilisation à la programation multimédia 
 <br/>
 <br/>
 
-_*Fait par Romain MILLAN*_
+![Fait par Romain MILLAN](https://github.com/RomainMILLAN-IUT-MTPSETE/Casse-Brique/assets/42139000/d4f0e220-b3ee-418b-9dd9-6b3c7fee362c)
