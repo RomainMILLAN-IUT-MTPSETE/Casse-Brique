@@ -1,5 +1,10 @@
 import * as cpn from "./components.js";
 
+function collisionSound() {
+    const breakSong = new Audio('./utils/break.wav');
+    breakSong.volume = 0.2;
+    breakSong.play();
+}
 
 function collision(components, obj1, obj2) {
     // Simple AABB collision detection
@@ -28,30 +33,33 @@ const collisionSystem = (entities, components,ecs) => {
     for (const ball of Object.getOwnPropertySymbols(components[cpn.BallTag.name])) {
         {
             for (const obj of Object.getOwnPropertySymbols(components[cpn.CollisionTag.name])) {
-                components.CollisionBoxComponent[obj].hit = false;
+                if (!components.BallTag[obj]) {
+                    components.CollisionBoxComponent[obj].hit = false;
 
-                if (ball != obj) {
-                    if (collision(components, ball, obj)) {
-                        components.CollisionBoxComponent[obj].hit = true;
-                        //Traitement des cas de collision
-                        //
-                        let ballobj = {x:components.PositionComponent[ball].x,y:components.PositionComponent[ball].y ,width : components.CollisionBoxComponent[ball].width,height : components.CollisionBoxComponent[ball].height}
-                        let otherobj = {x:components.PositionComponent[obj].x ,y:components.PositionComponent[obj].y,width : components.CollisionBoxComponent[obj].width,height : components.CollisionBoxComponent[obj].height}
-                        let axe = detectCollisionAxis(ballobj, otherobj)
-
-                        if(axe == 'X')
-                        {
-                            components.VelocityComponent[ball].dx = -components.VelocityComponent[ball].dx ; 
+                    if (ball != obj) {
+                        if (collision(components, ball, obj)) {
+                            collisionSound();
+                            components.CollisionBoxComponent[obj].hit = true;
+                            //Traitement des cas de collision
+                            //
+                            let ballobj = {x:components.PositionComponent[ball].x,y:components.PositionComponent[ball].y ,width : components.CollisionBoxComponent[ball].width,height : components.CollisionBoxComponent[ball].height}
+                            let otherobj = {x:components.PositionComponent[obj].x ,y:components.PositionComponent[obj].y,width : components.CollisionBoxComponent[obj].width,height : components.CollisionBoxComponent[obj].height}
+                            let axe = detectCollisionAxis(ballobj, otherobj)
+    
+                            if(axe == 'X')
+                            {
+                                components.VelocityComponent[ball].dx = -components.VelocityComponent[ball].dx ; 
+                            }
+                            else
+                            {
+                                components.VelocityComponent[ball].dy = -components.VelocityComponent[ball].dy ; 
+                            }
+                            if(components.BriqueTag[obj]){
+                                ecs.removeEntity(obj);
+                                ecs.eventEmitter.emit('hit');
+                            }
+                            
                         }
-                        else
-                        {
-                            components.VelocityComponent[ball].dy = -components.VelocityComponent[ball].dy ; 
-                        }
-                        if(components.BriqueTag[obj]){
-                            ecs.removeEntity(obj);
-                            ecs.eventEmitter.emit('hit');
-                        }
-                        
                     }
                 }
             }
