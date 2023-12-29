@@ -1,6 +1,9 @@
 # Romain MILLAN IUT MTP/SETE - Casse Brique
 
 Projet étudiant lors du cour de sensibilisation à la programation multimédia au cour du Semestre 5 du BUT Informatique à l'IUT de Montpellier/Sète.
+<br/>
+Une version jouable en ligne est disponible sur http://casse-brique.romainmillan.fr/.
+Le github est disponible sur le lien suivant https://github.com/RomainMILLAN-IUT-MTPSETE/Casse-Brique.
 
 ### Technologies
 
